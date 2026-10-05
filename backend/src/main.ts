@@ -27,7 +27,8 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   const port = Number(process.env.PORT ?? 4000);
-  await app.listen(port);
-  console.log(`API ready at http://localhost:${port}/api`);
+  const host = process.env.HOST ?? '0.0.0.0';
+  await app.listen(port, host);
+  console.log(`API ready at http://${host}:${port}/api`);
 }
 await bootstrap();

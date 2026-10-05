@@ -1,0 +1,2 @@
+# Lets the deploy user restart only the portfolio services, without a password.
+deploy ALL=(root) NOPASSWD: /usr/bin/systemctl restart homa-portfolio-api, /usr/bin/systemctl restart homa-portfolio-web

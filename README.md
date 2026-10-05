@@ -49,3 +49,22 @@ npm start
 ```
 
 Run `npm test` to execute the API end-to-end tests.
+
+## Deploying to the server
+
+The app runs from `/opt/homa-portfolio` as two systemd services, next to other sites on the same server:
+
+| Service                 | Listens on        |
+| ----------------------- | ----------------- |
+| `homa-portfolio-api`    | `127.0.0.1:4000`  |
+| `homa-portfolio-web`    | `127.0.0.1:3002`  |
+
+Nginx (`deploy/nginx/homa-portfolio.conf`) serves the website on the portfolio's own domain; the API is never exposed publicly.
+
+To ship a new version, push to `main`, then on the server run:
+
+```bash
+/opt/homa-portfolio/deploy/deploy.sh
+```
+
+It pulls, rebuilds both apps, restarts the services and checks they are healthy.

@@ -1,0 +1,22 @@
+[Unit]
+Description=Homa Zohdi Portfolio Web (Next.js)
+After=network.target homa-portfolio-api.service
+Wants=homa-portfolio-api.service
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/homa-portfolio/frontend
+Environment=NODE_ENV=production
+Environment=API_URL=http://127.0.0.1:4000/api
+ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -H 127.0.0.1 -p 3002
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
