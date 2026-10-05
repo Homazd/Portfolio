@@ -1,10 +1,10 @@
-import type { Portfolio } from './portfolio.types.js';
+import type { Portfolio } from '../portfolio.types.js';
 
 /**
- * All website content lives here, based on Homa Zohdi's résumé.
+ * English content, based on Homa Zohdi's résumé. The Persian version is in fa.ts.
  * The frontend picks up changes automatically (within ~60 seconds).
  */
-export const portfolioData: Portfolio = {
+export const en: Portfolio = {
   profile: {
     name: 'Homa Zohdi',
     title: 'Full-Stack Developer',

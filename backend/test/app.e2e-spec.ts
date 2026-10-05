@@ -25,6 +25,25 @@ describe('Portfolio API (e2e)', () => {
     expect(res.body.projects.length).toBeGreaterThan(0);
   });
 
+  it('GET /portfolio?lang=fa returns Persian content', async () => {
+    const res = await request(app.getHttpServer()).get('/portfolio?lang=fa').expect(200);
+    expect(res.body.profile.name).toBe('هما زهدی');
+  });
+
+  it('unknown lang falls back to English', async () => {
+    const res = await request(app.getHttpServer()).get('/portfolio?lang=xx').expect(200);
+    expect(res.body.profile.name).toBe('Homa Zohdi');
+  });
+
+  it('English and Persian have the same projects', async () => {
+    const [enRes, faRes] = await Promise.all([
+      request(app.getHttpServer()).get('/projects?lang=en'),
+      request(app.getHttpServer()).get('/projects?lang=fa'),
+    ]);
+    const slugs = (list: { slug: string }[]) => list.map((p) => p.slug);
+    expect(slugs(faRes.body)).toEqual(slugs(enRes.body));
+  });
+
   it('GET /projects/:slug returns 404 for unknown project', () => {
     return request(app.getHttpServer()).get('/projects/does-not-exist').expect(404);
   });

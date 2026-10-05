@@ -66,6 +66,11 @@ body {
   font-variation-settings: "opsz" 14;
 }
 
+:root[lang="fa"] body {
+  font-family: var(--font-vazirmatn), system-ui, sans-serif;
+  font-variation-settings: normal;
+}
+
 ::selection {
   background: var(--butter);
   color: #000;
@@ -85,6 +90,16 @@ body {
     font-variation-settings: "opsz" 96;
     letter-spacing: -0.02em;
     line-height: 0.9;
+  }
+
+  /* Persian: Lalezar is already heavy and has a single weight, so don't synthesize bold. */
+  :root[lang="fa"] .display {
+    font-family: var(--font-lalezar), var(--font-vazirmatn), sans-serif;
+    font-weight: 400;
+    font-stretch: normal;
+    font-variation-settings: normal;
+    letter-spacing: 0;
+    line-height: 1.2;
   }
 
   .nb-card {

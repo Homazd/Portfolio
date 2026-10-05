@@ -1,6 +1,8 @@
 "use server";
 
 import { headers } from "next/headers";
+import { defaultLocale, hasLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import { API_URL } from "@/lib/api";
 
 export interface ContactState {
@@ -9,14 +11,27 @@ export interface ContactState {
   errors?: string[];
 }
 
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function sendMessage(_prev: ContactState, formData: FormData): Promise<ContactState> {
+  const lang = String(formData.get("lang") ?? "");
+  const t = getDictionary(hasLocale(lang) ? lang : defaultLocale).form;
+
   const payload = {
-    name: String(formData.get("name") ?? ""),
-    email: String(formData.get("email") ?? ""),
-    subject: String(formData.get("subject") ?? ""),
-    message: String(formData.get("message") ?? ""),
+    name: String(formData.get("name") ?? "").trim(),
+    email: String(formData.get("email") ?? "").trim(),
+    subject: String(formData.get("subject") ?? "").trim(),
+    message: String(formData.get("message") ?? "").trim(),
     website: String(formData.get("website") ?? ""),
   };
+
+  // Same rules as the API, checked here so errors appear in the visitor's language.
+  const errors: string[] = [];
+  if (payload.name.length < 2 || payload.name.length > 100) errors.push(t.errors.name);
+  if (!EMAIL.test(payload.email) || payload.email.length > 200) errors.push(t.errors.email);
+  if (payload.subject.length > 150) errors.push(t.errors.subject);
+  if (payload.message.length < 10 || payload.message.length > 5000) errors.push(t.errors.message);
+  if (errors.length) return { status: "error", message: t.checkForm, errors };
 
   // Forward the visitor's IP so the API's rate limit applies per visitor.
   const h = await headers();
@@ -33,20 +48,10 @@ export async function sendMessage(_prev: ContactState, formData: FormData): Prom
       cache: "no-store",
     });
 
-    const body = await res.json().catch(() => ({}));
-
-    if (res.ok) {
-      return { status: "success", message: body.message ?? "Thank you — your message has been sent." };
-    }
-    if (res.status === 429) {
-      return { status: "error", message: "Too many messages. Please try again in a minute." };
-    }
-    const errors = Array.isArray(body.message) ? body.message : body.message ? [body.message] : undefined;
-    return { status: "error", message: "Please check the form and try again.", errors };
+    if (res.ok) return { status: "success", message: t.sent };
+    if (res.status === 429) return { status: "error", message: t.tooMany };
+    return { status: "error", message: t.checkForm };
   } catch {
-    return {
-      status: "error",
-      message: "The message service is unavailable right now. Please email me directly instead.",
-    };
+    return { status: "error", message: t.unavailable };
   }
 }

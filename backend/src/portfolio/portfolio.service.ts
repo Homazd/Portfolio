@@ -1,19 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { portfolioData } from './portfolio.data.js';
+import { en } from './data/en.js';
+import { fa } from './data/fa.js';
 import type { Portfolio, Project } from './portfolio.types.js';
+
+const content = { en, fa } satisfies Record<string, Portfolio>;
+
+export type Locale = keyof typeof content;
+export const LOCALES = Object.keys(content) as Locale[];
+
+/** Unknown or missing languages fall back to English. */
+export function toLocale(value?: string): Locale {
+  return LOCALES.includes(value as Locale) ? (value as Locale) : 'en';
+}
 
 @Injectable()
 export class PortfolioService {
-  getAll(): Portfolio {
-    return portfolioData;
+  getAll(locale: Locale): Portfolio {
+    return content[locale];
   }
 
-  getProjects(): Project[] {
-    return portfolioData.projects;
+  getProjects(locale: Locale): Project[] {
+    return content[locale].projects;
   }
 
-  getProject(slug: string): Project {
-    const project = portfolioData.projects.find((p) => p.slug === slug);
+  getProject(slug: string, locale: Locale): Project {
+    const project = content[locale].projects.find((p) => p.slug === slug);
     if (!project) {
       throw new NotFoundException(`Project "${slug}" not found`);
     }

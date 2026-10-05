@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
-import { PortfolioService } from './portfolio.service.js';
+import { PortfolioService, toLocale } from './portfolio.service.js';
 
 @SkipThrottle()
 @Controller()
@@ -8,17 +8,17 @@ export class PortfolioController {
   constructor(private readonly portfolio: PortfolioService) {}
 
   @Get('portfolio')
-  getPortfolio() {
-    return this.portfolio.getAll();
+  getPortfolio(@Query('lang') lang?: string) {
+    return this.portfolio.getAll(toLocale(lang));
   }
 
   @Get('projects')
-  getProjects() {
-    return this.portfolio.getProjects();
+  getProjects(@Query('lang') lang?: string) {
+    return this.portfolio.getProjects(toLocale(lang));
   }
 
   @Get('projects/:slug')
-  getProject(@Param('slug') slug: string) {
-    return this.portfolio.getProject(slug);
+  getProject(@Param('slug') slug: string, @Query('lang') lang?: string) {
+    return this.portfolio.getProject(slug, toLocale(lang));
   }
 }

@@ -1,3 +1,4 @@
+import type { Dictionary } from "@/i18n/dictionaries";
 import type { Certification, Education, Profile } from "@/lib/types";
 import { Heading } from "./heading";
 
@@ -5,15 +6,19 @@ export function About({
   profile,
   education,
   certifications,
+  dict,
+  separator,
 }: {
   profile: Profile;
   education: Education[];
   certifications: Certification[];
+  dict: Dictionary["about"];
+  separator: string;
 }) {
   return (
     <section id="about" className="border-t-3 border-line py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <Heading title="About me" />
+        <Heading title={dict.title} />
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
           <div className="max-w-[62ch] space-y-6 text-lg leading-relaxed">
             {profile.about.map((p, i) => (
@@ -24,13 +29,15 @@ export function About({
           </div>
 
           <aside className="nb-card h-fit p-6">
-            <h3 className="text-xl font-extrabold text-plum">Education</h3>
+            <h3 className="text-xl font-extrabold text-plum">{dict.education}</h3>
             <ul className="mt-3 space-y-4">
               {education.map((e) => (
                 <li key={e.institution + e.degree}>
                   <p className="font-bold">{e.degree}</p>
                   <p className="text-muted">
-                    {e.institution}, {e.start}–{e.end}
+                    {e.institution}
+                    {separator}
+                    {e.start}–{e.end}
                   </p>
                   {e.details && <p className="mt-1 text-sm text-muted">{e.details}</p>}
                 </li>
@@ -39,7 +46,7 @@ export function About({
             {certifications.length > 0 && (
               <>
                 <h3 className="mt-8 border-t-3 border-dashed border-line pt-6 text-xl font-extrabold text-plum">
-                  Certifications
+                  {dict.certifications}
                 </h3>
                 <ul className="mt-3 space-y-3">
                   {certifications.map((c) => (

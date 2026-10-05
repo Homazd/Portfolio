@@ -1,3 +1,4 @@
+import type { Dictionary } from "@/i18n/dictionaries";
 import type { SkillGroup } from "@/lib/types";
 import { Heading } from "./heading";
 
@@ -8,11 +9,11 @@ const CHIP_COLORS = [
   "bg-sky text-on-color",
 ];
 
-export function Skills({ groups }: { groups: SkillGroup[] }) {
+export function Skills({ groups, dict }: { groups: SkillGroup[]; dict: Dictionary["skills"] }) {
   return (
     <section id="skills" className="border-t-3 border-line bg-surface py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <Heading title="Skills" intro="The tools and practices I use every week." />
+        <Heading title={dict.title} intro={dict.intro} />
         <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">
           {groups.map((group, i) => (
             <div key={group.name}>

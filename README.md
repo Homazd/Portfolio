@@ -17,18 +17,23 @@ npm run dev           # API on http://localhost:4000/api, site on http://localho
 
 ## Editing your content
 
-All text on the site — profile, experience, projects, skills, education and certifications — lives in one file:
+The site is bilingual — English at `/en` and Persian (right-to-left) at `/fa`. Visitors are sent to the language their browser prefers, and the language switch in the header remembers their choice.
 
-**`backend/src/portfolio/portfolio.data.ts`**
+- **Portfolio content** (profile, experience, projects, skills, education) lives in two files that mirror each other:
+  - `backend/src/portfolio/data/en.ts`
+  - `backend/src/portfolio/data/fa.ts`
 
-Edit it and the site updates within about 60 seconds. The résumé button links to `/resume.pdf`, so put your PDF at `frontend/public/resume.pdf` (or remove `resumeUrl`).
+  Keep project `slug`s identical in both; the API tests check this.
+- **Interface text** (buttons, headings, form messages) lives in `frontend/src/i18n/dictionaries/en.ts` and `fa.ts`.
+
+Changes appear on the site within about 60 seconds. The résumé button links to `frontend/public/resume.pdf`.
 
 ## API
 
 | Method | Path                   | Description                                       |
 | ------ | ---------------------- | ------------------------------------------------- |
 | GET    | `/api/health`          | Health check                                      |
-| GET    | `/api/portfolio`       | All portfolio content                             |
+| GET    | `/api/portfolio?lang=` | All portfolio content (`en` or `fa`)              |
 | GET    | `/api/projects`        | List of projects                                  |
 | GET    | `/api/projects/:slug`  | Single project                                    |
 | POST   | `/api/contact`         | Submit a message (validated, 5 per minute per IP) |

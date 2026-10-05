@@ -3,6 +3,8 @@
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useActionState, useEffect, useRef } from "react";
 import { sendMessage, type ContactState } from "@/app/actions";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const initialState: ContactState = { status: "idle" };
 
@@ -10,7 +12,7 @@ const initialState: ContactState = { status: "idle" };
 const input =
   "w-full rounded-xl border-3 border-black bg-white px-4 py-3 text-black outline-none placeholder:text-neutral-500 focus:shadow-[4px_4px_0_var(--plum)]";
 
-export function ContactForm() {
+export function ContactForm({ lang, dict }: { lang: Locale; dict: Dictionary["form"] }) {
   const [state, formAction, pending] = useActionState(sendMessage, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -20,18 +22,29 @@ export function ContactForm() {
 
   return (
     <form ref={formRef} action={formAction} className="space-y-5 text-black">
+      <input type="hidden" name="lang" value={lang} />
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Your name" htmlFor="name">
-          <input id="name" name="name" required minLength={2} maxLength={100} autoComplete="name" placeholder="Jane Doe" className={input} />
+        <Field label={dict.name} htmlFor="name">
+          <input id="name" name="name" required minLength={2} maxLength={100} autoComplete="name" placeholder={dict.namePlaceholder} className={input} />
         </Field>
-        <Field label="Your email" htmlFor="email">
-          <input id="email" name="email" type="email" required maxLength={200} autoComplete="email" placeholder="jane@company.com" className={input} />
+        <Field label={dict.email} htmlFor="email">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            dir="ltr"
+            required
+            maxLength={200}
+            autoComplete="email"
+            placeholder={dict.emailPlaceholder}
+            className={input}
+          />
         </Field>
       </div>
-      <Field label="Subject" htmlFor="subject" optional>
-        <input id="subject" name="subject" maxLength={150} placeholder="New website for our clinic" className={input} />
+      <Field label={dict.subject} htmlFor="subject" optional={dict.optional}>
+        <input id="subject" name="subject" maxLength={150} placeholder={dict.subjectPlaceholder} className={input} />
       </Field>
-      <Field label="Message" htmlFor="message">
+      <Field label={dict.message} htmlFor="message">
         <textarea
           id="message"
           name="message"
@@ -39,7 +52,7 @@ export function ContactForm() {
           minLength={10}
           maxLength={5000}
           rows={6}
-          placeholder="What are you working on, and how can I help?"
+          placeholder={dict.messagePlaceholder}
           className={`${input} resize-y`}
         />
       </Field>
@@ -56,11 +69,11 @@ export function ContactForm() {
           className={`rounded-xl border-3 border-black p-4 ${state.status === "success" ? "bg-mint" : "bg-red-200"}`}
         >
           <p className="flex items-center gap-2 font-bold">
-            {state.status === "success" && <CheckCircle2 className="size-5" />}
+            {state.status === "success" && <CheckCircle2 className="size-5 shrink-0" />}
             {state.message}
           </p>
           {state.errors && (
-            <ul className="mt-2 list-disc space-y-1 pl-5">
+            <ul className="mt-2 list-disc space-y-1 ps-5">
               {state.errors.map((e) => (
                 <li key={e}>{e}</li>
               ))}
@@ -69,13 +82,9 @@ export function ContactForm() {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="nb-btn w-full border-black bg-plum text-white sm:w-auto"
-      >
-        {pending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-        {pending ? "Sending…" : "Send message"}
+      <button type="submit" disabled={pending} className="nb-btn w-full border-black bg-plum text-white sm:w-auto">
+        {pending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4 rtl:-scale-x-100" />}
+        {pending ? dict.sending : dict.send}
       </button>
     </form>
   );
@@ -89,13 +98,13 @@ function Field({
 }: {
   label: string;
   htmlFor: string;
-  optional?: boolean;
+  optional?: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
       <label htmlFor={htmlFor} className="mb-2 block font-bold">
-        {label} {optional && <span className="font-normal text-neutral-600">(optional)</span>}
+        {label} {optional && <span className="font-normal text-neutral-600">{optional}</span>}
       </label>
       {children}
     </div>
