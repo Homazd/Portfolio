@@ -36,7 +36,7 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
             {profile.highlights.slice(0, 4).map((h, i) => (
               <li key={h.label} className={i > 1 ? "hidden md:block" : undefined}>
                 <Sticker color={STAT_STICKERS[i].color} rotate={STAT_STICKERS[i].rotate} index={i + 1}>
-                  {/* dir="auto": "4+" / "۴۰٪" stay in reading order, words like "۵۰ هزار" stay RTL */}
+                  {/* dir="auto": "4+" / "۴۰٪" stay in reading order, words like "۱۰ هزار" stay RTL */}
                   <span dir="auto" className="display text-3xl">
                     {h.value}
                   </span>

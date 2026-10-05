@@ -76,19 +76,21 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
                   </p>
                 ))}
               </div>
-              <div>
-                <h2 className="display text-5xl">{t.results}</h2>
-                <ul className="mt-6 space-y-4">
-                  {project.outcomes.map((o) => (
-                    <li key={o} className="nb-card flex items-start gap-4 p-5 text-lg font-semibold">
-                      <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-black bg-mint text-black">
-                        <Check className="size-4" strokeWidth={3} />
-                      </span>
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {project.outcomes.length > 0 && (
+                <div>
+                  <h2 className="display text-5xl">{t.results}</h2>
+                  <ul className="mt-6 space-y-4">
+                    {project.outcomes.map((o) => (
+                      <li key={o} className="nb-card flex items-start gap-4 p-5 text-lg font-semibold">
+                        <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-black bg-mint text-black">
+                          <Check className="size-4" strokeWidth={3} />
+                        </span>
+                        {o}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
             <aside className="nb-card h-fit p-6 md:sticky md:top-28">
               <h3 className="font-extrabold text-plum">{t.myRole}</h3>

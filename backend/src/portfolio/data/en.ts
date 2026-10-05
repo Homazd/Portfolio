@@ -29,7 +29,7 @@ export const en: Portfolio = {
     highlights: [
       { label: 'years shipping web apps', value: '4+' },
       { label: 'faster LCP on a VOD platform', value: '40%' },
-      { label: 'concurrent users supported', value: '50K+' },
+      { label: 'higher user retention in a health app', value: '25%' },
       { label: 'patient records managed', value: '10K+' },
     ],
   },
@@ -42,12 +42,13 @@ export const en: Portfolio = {
       start: 'Mar 2024',
       end: 'Present',
       summary:
-        'Full-stack work on falaktv.live, a video-on-demand platform.',
+        'Full-stack work on falaktv.live, a video-on-demand platform, and FalakAI, an AI content creation platform.',
       achievements: [
         'Built the Next.js 15 and TypeScript frontend with SSR/ISR and integrated REST APIs from Node.js/NestJS backend services, delivering a scalable, SEO-friendly experience.',
         'Designed and maintained a reusable component library and optimized SSR/ISR rendering strategies, reducing LCP by 40%.',
         "Reviewed peers' code and helped establish best practices and consistent patterns across the codebase.",
         'Delivered responsive, accessible (WCAG 2.1) features end to end with UX/UI, backend and product teams.',
+        'On FalakAI, built features across the frontend and backend, and collaborated on semantic relationships in the knowledge graph, caching, context compaction and workspaces.',
       ],
       stack: ['Next.js 15', 'TypeScript', 'NestJS', 'Node.js', 'SSR / ISR'],
     },
@@ -74,7 +75,7 @@ export const en: Portfolio = {
       summary: 'A customer website redesign and a high-load admin panel.',
       achievements: [
         'Redesigned the customer-facing website, strengthening brand presence and doubling organic traffic.',
-        'Engineered a high-throughput admin panel, resolving stability issues under high load (50K+ concurrent users).',
+        'Engineered a high-throughput admin panel, resolving stability issues under high load.',
       ],
       stack: ['React', 'Mantine', 'Ant Design', 'Tailwind CSS', 'RTK Query', 'Axios'],
     },
@@ -112,7 +113,24 @@ export const en: Portfolio = {
       ],
       stack: ['Next.js 15', 'TypeScript', 'NestJS', 'Node.js', 'SSR / ISR'],
       featured: true,
-      links: { live: 'https://falaktv.live' },
+      links: { live: 'https://falaklive.com/' },
+    },
+    {
+      slug: 'falakai',
+      title: 'FalakAI',
+      category: 'AI content creation',
+      year: '2026',
+      summary:
+        'An AI-powered content creation platform that I work on across the frontend and backend.',
+      description: [
+        'FalakAI is a content creation platform powered by AI, built at WebCasting. I work on both its frontend and its backend.',
+        'I collaborated on semantic relationships between content in the knowledge graph (built with Graphiti), caching, context compaction and workspaces.',
+      ],
+      role: 'Full-stack developer at WebCasting.',
+      outcomes: [],
+      stack: ['NestJS', 'Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Graphiti'],
+      featured: true,
+      links: { live: 'https://falakai.falaklive.com/' },
     },
     {
       slug: 'vakilzohdi',
@@ -151,8 +169,8 @@ export const en: Portfolio = {
         'Operators manage 10K+ patient records efficiently in the CRM panel.',
       ],
       stack: ['Next.js', 'React Query', 'Tailwind CSS', 'Material UI', 'Storybook', 'Orval'],
-      featured: true,
-      links: {},
+      featured: false,
+      links: { live: 'https://eleganthoopoe.ae/' },
     },
     {
       slug: 'siz-tel',
@@ -167,7 +185,7 @@ export const en: Portfolio = {
       role: 'Frontend Developer at Siz-Tel.',
       outcomes: [
         'Doubled organic traffic to the customer website.',
-        'Resolved stability issues under high load (50K+ concurrent users).',
+        'Resolved stability issues under high load.',
       ],
       stack: ['React', 'Mantine', 'Ant Design', 'Tailwind CSS', 'RTK Query'],
       featured: false,
