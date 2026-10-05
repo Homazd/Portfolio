@@ -73,3 +73,11 @@ To ship a new version, push to `main`, then on the server run:
 ```
 
 It pulls, rebuilds both apps, restarts the services and checks they are healthy.
+
+The domain (`homazohdi.ir`) is connected once by an admin, after its DNS `A` records point to the server:
+
+```bash
+sudo bash /opt/homa-portfolio/deploy/setup-domain.sh
+```
+
+It installs the Nginx site and requests the Let's Encrypt certificate (renewed automatically by certbot).
