@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens ----------
+   Neobrutalism: flat candy colors, true-black outlines, hard shadows.
+   Plum is the key color; butter and mint support it. */
+:root {
+  --background: #f3eefa; /* lilac milk */
+  --surface: #ffffff;
+  --foreground: #000000;
+  --muted: #4a3f52;
+  --line: #000000;
+  --shadow-color: #000000;
+  --plum: #8e2c7e;
+  --plum-foreground: #ffffff;
+  --butter: #ffd84d;
+  --mint: #a8ebc6;
+  --sky: #a9d6ff;
+  --on-color: #000000; /* text on butter/mint/sky */
+  --ring: #8e2c7e;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --background: #1a1220;
+  --surface: #261c2e;
+  --foreground: #f6f0fb;
+  --muted: #c9bcd2;
+  --line: #f6f0fb;
+  --shadow-color: #000000;
+  --plum: #b64aa3;
+  --plum-foreground: #ffffff;
+  --butter: #ffd84d;
+  --mint: #8fe0b4;
+  --sky: #9ccfff;
+  --on-color: #000000;
+  --ring: #ffd84d;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-plum: var(--plum);
+  --color-plum-foreground: var(--plum-foreground);
+  --color-butter: var(--butter);
+  --color-mint: var(--mint);
+  --color-sky: var(--sky);
+  --color-on-color: var(--on-color);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-bricolage);
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-variation-settings: "opsz" 14;
+}
+
+::selection {
+  background: var(--butter);
+  color: #000;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* ---------- Neobrutalist components ---------- */
+@layer components {
+  /* Condensed, heavy display type */
+  .display {
+    font-weight: 800;
+    font-stretch: 75%;
+    font-variation-settings: "opsz" 96;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+  }
+
+  .nb-card {
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: 6px 6px 0 var(--shadow-color);
+  }
+  :root[data-theme="dark"] .nb-card {
+    box-shadow: 6px 6px 0 var(--plum);
+  }
+
+  .nb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 3px solid var(--line);
+    border-radius: 999px;
+    padding: 0.7rem 1.4rem;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 var(--shadow-color);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .nb-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--shadow-color);
+  }
+  .nb-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--shadow-color);
+  }
+  .nb-btn:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .nb-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .nb-input {
+    width: 100%;
+    border: 3px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: box-shadow 0.1s ease;
+  }
+  .nb-input::placeholder {
+    color: var(--muted);
+    opacity: 0.75;
+  }
+  .nb-input:focus {
+    box-shadow: 4px 4px 0 var(--plum);
+  }
+
+  /* Hero stickers: the page's single load-in moment */
+  .sticker {
+    animation: sticker-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 250ms);
+  }
+}
+
+@keyframes sticker-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(var(--r, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(var(--r, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .sticker {
+    animation: none;
+  }
+  .nb-btn,
+  .nb-btn:hover,
+  .nb-btn:active {
+    transition: none;
+  }
+}
