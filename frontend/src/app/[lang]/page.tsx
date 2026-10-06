@@ -31,7 +31,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Skills groups={data.skills} dict={dict.skills} />
         <Contact profile={data.profile} lang={lang} dict={dict} />
       </main>
-      <Footer profile={data.profile} lang={lang} dict={dict.footer} />
+      <Footer profile={data.profile} dict={dict.footer} />
     </>
   );
 }

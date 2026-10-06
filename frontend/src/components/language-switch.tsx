@@ -13,6 +13,9 @@ export function LanguageSwitch({ lang, label }: { lang: Locale; label: string })
   return (
     <Link
       href={localizePath(pathname, target)}
+      // Same page in the other language: keep the reader where they are. (Next's automatic
+      // scroll misplaces the page when <html> changes, e.g. jumping to the bottom.)
+      scroll={false}
       hrefLang={target}
       lang={target}
       aria-label={label}

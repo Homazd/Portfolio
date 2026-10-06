@@ -124,7 +124,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
           </section>
         )}
       </main>
-      <Footer profile={data.profile} lang={lang} dict={dict.footer} />
+      <Footer profile={data.profile} dict={dict.footer} />
     </>
   );
 }
