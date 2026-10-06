@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, Lalezar, Vazirmatn } from "next/font/google";
 import { hasLocale, localeMeta, locales } from "@/i18n/config";
-import { isTheme, THEME_COOKIE } from "@/lib/theme";
+import { DEFAULT_THEME, isTheme, THEME_COOKIE } from "@/lib/theme";
 import { getPortfolio } from "@/lib/api";
 import "../globals.css";
 
@@ -61,9 +61,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const fonts = lang === "fa" ? `${vazirmatn.variable} ${lalezar.variable}` : bricolage.variable;
 
   // The visitor's saved theme is rendered by the server, so it survives every
-  // navigation (including switching language). No cookie = follow the system setting.
+  // navigation (including switching language). Without a saved choice: dark.
   const saved = (await cookies()).get(THEME_COOKIE)?.value;
-  const theme = isTheme(saved) ? saved : undefined;
+  const theme = isTheme(saved) ? saved : DEFAULT_THEME;
 
   return (
     <html

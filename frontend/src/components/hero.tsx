@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Download, MapPin } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -18,21 +19,40 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
     <section className="pt-32 pb-24 sm:pt-36">
       <div className="mx-auto max-w-6xl px-6">
         {/* Name plate */}
-        <div className="relative rounded-[28px] border-3 border-line bg-plum px-6 pt-16 pb-24 text-plum-foreground shadow-[10px_10px_0_#000] sm:px-12 sm:pt-20 sm:pb-20">
-          <Sticker color="mint" rotate={4} index={0} className="absolute -top-5 inset-e-4 text-sm sm:inset-e-10">
+        <div className="relative rounded-[28px] border-3 border-line bg-plum px-6 pt-16 pb-28 text-plum-foreground shadow-[10px_10px_0_#000] sm:px-12 sm:pt-20 sm:pb-24">
+          <Sticker color="mint" rotate={4} index={0} className="absolute -top-5 inset-e-4 z-10 text-sm sm:inset-e-10">
             <span className="size-2.5 rounded-full bg-emerald-600" />
             {profile.availability}
           </Sticker>
 
-          <h1 className="display text-[clamp(4.5rem,17vw,12rem)] wrap-break-word">{profile.name}</h1>
-          <p className="mt-6 inline-block -rotate-1 rounded-xl border-3 border-black bg-butter px-4 py-1.5 text-xl font-extrabold text-black sm:text-3xl">
-            {profile.title}
-          </p>
-          <p className="mt-6 flex items-center gap-2 font-semibold opacity-90">
-            <MapPin className="size-4" /> {profile.location}
-          </p>
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="min-w-0">
+              <h1 className="display text-[clamp(4rem,14vw,9rem)] wrap-break-word">{profile.name}</h1>
+              <p className="mt-6 inline-block -rotate-1 rounded-xl border-3 border-black bg-butter px-4 py-1.5 text-xl font-extrabold text-black sm:text-3xl">
+                {profile.title}
+              </p>
+              <p className="mt-6 flex items-center gap-2 font-semibold opacity-90">
+                <MapPin className="size-4" /> {profile.location}
+              </p>
+            </div>
 
-          <ul className="absolute inset-e-4 -bottom-8 flex flex-wrap justify-end gap-3 sm:inset-e-10 sm:-bottom-7">
+            {profile.photo && (
+              // Framed like a photo stuck onto the plate; tilts the other way in RTL.
+              <figure className="order-first w-44 rotate-3 rounded-2xl border-3 border-black bg-white p-2 shadow-[8px_8px_0_#000] sm:w-56 lg:order-none lg:w-72 rtl:-rotate-3">
+                <Image
+                  src={profile.photo}
+                  alt={profile.name}
+                  width={800}
+                  height={1000}
+                  sizes="(min-width: 1024px) 18rem, (min-width: 640px) 14rem, 11rem"
+                  preload
+                  className="aspect-[4/5] w-full rounded-xl border-3 border-black object-cover"
+                />
+              </figure>
+            )}
+          </div>
+
+          <ul className="absolute inset-s-4 -bottom-8 z-10 flex flex-wrap gap-3 sm:inset-s-10 sm:-bottom-7">
             {profile.highlights.slice(0, 4).map((h, i) => (
               <li key={h.label} className={i > 1 ? "hidden md:block" : undefined}>
                 <Sticker color={STAT_STICKERS[i].color} rotate={STAT_STICKERS[i].rotate} index={i + 1}>

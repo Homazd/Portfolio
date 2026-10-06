@@ -4,9 +4,8 @@
    Neobrutalism: flat candy colors, true-black outlines, hard shadows.
    Plum is the key color; butter and mint support it.
 
-   Each token is light-dark(light value, dark value). The theme comes from the
-   "theme" cookie (rendered by the server as data-theme on <html>); without a
-   saved choice, the visitor's system setting decides. */
+   Each token is light-dark(light value, dark value). The server renders the
+   theme as data-theme on <html>: the visitor's saved choice, otherwise dark. */
 :root {
   color-scheme: light dark;
   --background: light-dark(#f3eefa, #1a1220); /* lilac milk / aubergine */
@@ -42,14 +41,6 @@
 }
 :root[data-theme="dark"] .theme-icon-moon {
   display: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-icon-sun {
-    display: block;
-  }
-  :root:not([data-theme="light"]) .theme-icon-moon {
-    display: none;
-  }
 }
 
 @theme inline {

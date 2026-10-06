@@ -16,6 +16,8 @@ export interface Profile {
   phone?: string;
   availability: string;
   resumeUrl?: string;
+  /** Portrait in frontend/public, e.g. /homa-zohdi.jpg */
+  photo?: string;
   socials: SocialLink[];
   about: string[];
   highlights: { label: string; value: string }[];

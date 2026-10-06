@@ -17,7 +17,7 @@ npm run dev           # API on http://localhost:4000/api, site on http://localho
 
 ## Editing your content
 
-The site is bilingual — English at `/en` and Persian (right-to-left) at `/fa`. Visitors are sent to the language their browser prefers, and the language switch in the header remembers their choice.
+The site is bilingual — Persian (right-to-left) at `/fa` and English at `/en`. New visitors see Persian in dark mode; the language switch and theme toggle in the header remember each visitor's choice.
 
 - **Portfolio content** (profile, experience, projects, skills, education) lives in two files that mirror each other:
   - `backend/src/portfolio/data/en.ts`

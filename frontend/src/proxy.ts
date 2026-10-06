@@ -3,20 +3,10 @@ import { defaultLocale, hasLocale, LOCALE_COOKIE, localizePath, type Locale } fr
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
-/** Saved choice first, then the browser's preferred languages, then the default. */
+/** The visitor's saved choice, otherwise Persian. */
 function preferredLocale(request: NextRequest): Locale {
   const saved = request.cookies.get(LOCALE_COOKIE)?.value;
-  if (hasLocale(saved)) return saved;
-
-  const accepted = (request.headers.get("accept-language") ?? "")
-    .split(",")
-    .map((part) => {
-      const [tag, q] = part.trim().split(";q=");
-      return { lang: tag.toLowerCase().split("-")[0], q: q ? Number(q) : 1 };
-    })
-    .sort((a, b) => b.q - a.q);
-
-  return accepted.map((a) => a.lang).find(hasLocale) ?? defaultLocale;
+  return hasLocale(saved) ? saved : defaultLocale;
 }
 
 export function proxy(request: NextRequest) {

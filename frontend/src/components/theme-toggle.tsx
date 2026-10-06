@@ -3,7 +3,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { isTheme, THEME_COOKIE, type Theme } from "@/lib/theme";
+import { DEFAULT_THEME, isTheme, THEME_COOKIE, type Theme } from "@/lib/theme";
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
@@ -26,11 +26,7 @@ export function ThemeToggle({ label }: { label: string }) {
 
   function toggle() {
     const root = document.documentElement;
-    const current: Theme = isTheme(root.dataset.theme)
-      ? root.dataset.theme
-      : window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+    const current: Theme = isTheme(root.dataset.theme) ? root.dataset.theme : DEFAULT_THEME;
     saveTheme(current === "dark" ? "light" : "dark");
     // Re-render server components so cached layouts carry the new theme too.
     router.refresh();

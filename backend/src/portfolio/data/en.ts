@@ -16,6 +16,7 @@ export const en: Portfolio = {
     phone: '+98 910 160 3927',
     availability: 'Open to new opportunities',
     resumeUrl: '/resume.pdf',
+    photo: '/homa-zohdi.jpg',
     socials: [
       { label: 'GitHub', url: 'https://github.com/Homazd', icon: 'github' },
       { label: 'LinkedIn', url: 'https://linkedin.com/in/homa-zohdi', icon: 'linkedin' },
