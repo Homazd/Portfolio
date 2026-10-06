@@ -69,7 +69,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
         <section className="border-t-3 border-line py-16">
           <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_280px]">
             <div className="space-y-12">
-              <div className="max-w-[65ch] space-y-5 text-lg leading-relaxed">
+              <div className="reveal max-w-[65ch] space-y-5 text-lg leading-relaxed">
                 {project.description.map((p, i) => (
                   <p key={i} className={i === 0 ? "text-xl font-semibold" : "text-muted"}>
                     {p}
@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
                 ))}
               </div>
               {project.outcomes.length > 0 && (
-                <div>
+                <div className="reveal">
                   <h2 className="display text-5xl">{t.results}</h2>
                   <ul className="mt-6 space-y-4">
                     {project.outcomes.map((o) => (
@@ -92,7 +92,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
                 </div>
               )}
             </div>
-            <aside className="nb-card h-fit p-6 md:sticky md:top-28">
+            <aside className="reveal nb-card h-fit p-6 md:sticky md:top-28">
               <h3 className="font-extrabold text-plum">{t.myRole}</h3>
               <p className="mt-2">{project.role}</p>
               <h3 className="mt-6 border-t-3 border-dashed border-line pt-6 font-extrabold text-plum">{t.builtWith}</h3>

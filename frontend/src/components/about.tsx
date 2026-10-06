@@ -20,7 +20,7 @@ export function About({
       <div className="mx-auto max-w-6xl px-6">
         <Heading title={dict.title} />
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
-          <div className="max-w-[62ch] space-y-6 text-lg leading-relaxed">
+          <div className="reveal max-w-[62ch] space-y-6 text-lg leading-relaxed">
             {profile.about.map((p, i) => (
               <p key={i} className={i === 0 ? "text-2xl font-semibold leading-snug" : "text-muted"}>
                 {p}
@@ -28,7 +28,7 @@ export function About({
             ))}
           </div>
 
-          <aside className="nb-card h-fit p-6">
+          <aside className="reveal nb-card h-fit p-6">
             <h3 className="text-xl font-extrabold text-plum">{dict.education}</h3>
             <ul className="mt-3 space-y-4">
               {education.map((e) => (

@@ -16,7 +16,7 @@ export function Skills({ groups, dict }: { groups: SkillGroup[]; dict: Dictionar
         <Heading title={dict.title} intro={dict.intro} />
         <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">
           {groups.map((group, i) => (
-            <div key={group.name}>
+            <div key={group.name} className="reveal">
               <h3 className="text-2xl font-extrabold">{group.name}</h3>
               <ul className="mt-4 flex flex-wrap gap-3">
                 {group.skills.map((s) => (

@@ -11,7 +11,7 @@ export function Experience({ items, dict }: { items: ExperienceItem[]; dict: Dic
         {/* A real timeline: a line with one marker per role (mirrors in RTL) */}
         <ol className="relative ms-3 border-s-3 border-line">
           {items.map((job, i) => (
-            <li key={job.company + job.start} className="relative pb-12 ps-8 last:pb-0 sm:ps-12">
+            <li key={job.company + job.start} className="reveal relative pb-12 ps-8 last:pb-0 sm:ps-12">
               <span
                 className={`absolute top-1 -inset-s-3.25 size-6 rounded-full border-3 border-line ${
                   i === 0 ? "bg-plum" : "bg-background"

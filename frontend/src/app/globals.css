@@ -199,3 +199,30 @@ body {
     transition: none;
   }
 }
+
+/* ---------- Scroll motion ----------
+   Blocks marked .reveal fade in and rise slightly as they scroll into view.
+   Pure CSS (scroll-driven animation): browsers without support, and visitors who
+   prefer reduced motion, simply see the content without animation.
+   Uses `translate` on wrappers only — don't put .reveal on elements that set their
+   own transform/translate (cards with hover lift, stickers). */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0 entry 220px;
+    }
+  }
+}

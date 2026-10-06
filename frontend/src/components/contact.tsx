@@ -9,7 +9,7 @@ export function Contact({ profile, lang, dict }: { profile: Profile; lang: Local
   return (
     <section id="contact" className="border-t-3 border-line bg-mint py-24 text-black">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1fr_1.3fr]">
-        <div>
+        <div className="reveal">
           <h2 className="display text-6xl sm:text-8xl">{t.title}</h2>
           <p className="mt-5 max-w-[45ch] text-lg leading-relaxed">{t.intro}</p>
           <dl className="mt-10 space-y-5 text-lg">
@@ -43,7 +43,7 @@ export function Contact({ profile, lang, dict }: { profile: Profile; lang: Local
           </dl>
         </div>
 
-        <div className="rounded-[18px] border-3 border-black bg-white p-6 shadow-[8px_8px_0_#000] sm:p-8">
+        <div className="reveal rounded-[18px] border-3 border-black bg-white p-6 shadow-[8px_8px_0_#000] sm:p-8">
           <ContactForm lang={lang} dict={dict.form} />
         </div>
       </div>
