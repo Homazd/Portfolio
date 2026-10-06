@@ -2,39 +2,54 @@
 
 /* ---------- Design tokens ----------
    Neobrutalism: flat candy colors, true-black outlines, hard shadows.
-   Plum is the key color; butter and mint support it. */
+   Plum is the key color; butter and mint support it.
+
+   Each token is light-dark(light value, dark value). The theme comes from the
+   "theme" cookie (rendered by the server as data-theme on <html>); without a
+   saved choice, the visitor's system setting decides. */
 :root {
-  --background: #f3eefa; /* lilac milk */
-  --surface: #ffffff;
-  --foreground: #000000;
-  --muted: #4a3f52;
-  --line: #000000;
+  color-scheme: light dark;
+  --background: light-dark(#f3eefa, #1a1220); /* lilac milk / aubergine */
+  --surface: light-dark(#ffffff, #261c2e);
+  --foreground: light-dark(#000000, #f6f0fb);
+  --muted: light-dark(#4a3f52, #c9bcd2);
+  --line: light-dark(#000000, #f6f0fb);
   --shadow-color: #000000;
-  --plum: #8e2c7e;
+  --plum: light-dark(#8e2c7e, #b64aa3);
   --plum-foreground: #ffffff;
   --butter: #ffd84d;
-  --mint: #a8ebc6;
-  --sky: #a9d6ff;
+  --mint: light-dark(#a8ebc6, #8fe0b4);
+  --sky: light-dark(#a9d6ff, #9ccfff);
   --on-color: #000000; /* text on butter/mint/sky */
-  --ring: #8e2c7e;
+  --ring: light-dark(#8e2c7e, #ffd84d);
+  --card-shadow: light-dark(var(--shadow-color), var(--plum));
+}
+
+:root[data-theme="light"] {
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --background: #1a1220;
-  --surface: #261c2e;
-  --foreground: #f6f0fb;
-  --muted: #c9bcd2;
-  --line: #f6f0fb;
-  --shadow-color: #000000;
-  --plum: #b64aa3;
-  --plum-foreground: #ffffff;
-  --butter: #ffd84d;
-  --mint: #8fe0b4;
-  --sky: #9ccfff;
-  --on-color: #000000;
-  --ring: #ffd84d;
   color-scheme: dark;
+}
+
+/* Theme toggle icon: show the sun while dark is active, the moon otherwise. */
+.theme-icon-sun {
+  display: none;
+}
+:root[data-theme="dark"] .theme-icon-sun {
+  display: block;
+}
+:root[data-theme="dark"] .theme-icon-moon {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon-sun {
+    display: block;
+  }
+  :root:not([data-theme="light"]) .theme-icon-moon {
+    display: none;
+  }
 }
 
 @theme inline {
@@ -106,10 +121,7 @@ body {
     border: 3px solid var(--line);
     border-radius: 18px;
     background: var(--surface);
-    box-shadow: 6px 6px 0 var(--shadow-color);
-  }
-  :root[data-theme="dark"] .nb-card {
-    box-shadow: 6px 6px 0 var(--plum);
+    box-shadow: 6px 6px 0 var(--card-shadow);
   }
 
   .nb-btn {

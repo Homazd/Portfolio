@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { Bricolage_Grotesque, Lalezar, Vazirmatn } from "next/font/google";
 import { hasLocale, localeMeta, locales } from "@/i18n/config";
+import { isTheme, THEME_COOKIE } from "@/lib/theme";
 import { getPortfolio } from "@/lib/api";
 import "../globals.css";
 
@@ -53,22 +54,26 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   }
 }
 
-// Applies the saved (or system) theme before first paint to avoid a flash.
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})();`;
-
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
 
   const fonts = lang === "fa" ? `${vazirmatn.variable} ${lalezar.variable}` : bricolage.variable;
 
+  // The visitor's saved theme is rendered by the server, so it survives every
+  // navigation (including switching language). No cookie = follow the system setting.
+  const saved = (await cookies()).get(THEME_COOKIE)?.value;
+  const theme = isTheme(saved) ? saved : undefined;
+
   return (
-    <html lang={lang} dir={localeMeta[lang].dir} suppressHydrationWarning className={`${fonts} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        {/* Injected into <head> by Next.js and run before the page is shown. */}
-        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {children}
-      </body>
+    <html
+      lang={lang}
+      dir={localeMeta[lang].dir}
+      data-theme={theme}
+      suppressHydrationWarning
+      className={`${fonts} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
