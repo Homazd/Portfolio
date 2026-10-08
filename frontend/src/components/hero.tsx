@@ -38,7 +38,7 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
 
             {profile.photo && (
               // Framed like a photo stuck onto the plate; tilts the other way in RTL.
-              <figure className="order-first w-44 rotate-3 rounded-2xl border-3 border-black bg-white p-2 shadow-[8px_8px_0_#000] sm:w-56 lg:order-none lg:w-72 rtl:-rotate-3">
+              <figure className="order-first w-44 rotate-3 rounded-2xl border-3 border-black bg-white p-2 shadow-[8px_8px_0_#000] sm:w-56 lg:order-0 lg:w-72 rtl:-rotate-3">
                 <Image
                   src={profile.photo}
                   alt={profile.name}
@@ -46,7 +46,7 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
                   height={1000}
                   sizes="(min-width: 1024px) 18rem, (min-width: 640px) 14rem, 11rem"
                   preload
-                  className="aspect-[4/5] w-full rounded-xl border-3 border-black object-cover"
+                  className="aspect-4/5 w-full rounded-xl border-3 border-black object-cover"
                 />
               </figure>
             )}
