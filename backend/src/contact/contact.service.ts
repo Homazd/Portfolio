@@ -42,6 +42,7 @@ export class ContactService {
     await this.queue;
 
     this.logger.log(`New message from ${entry.name} <${entry.email}>`);
+    void this.notify(entry);
     return { id: entry.id };
   }
 
@@ -50,6 +51,44 @@ export class ContactService {
       return JSON.parse(await readFile(this.file, 'utf8')) as StoredMessage[];
     } catch {
       return [];
+    }
+  }
+
+  /**
+   * Forwards the message to NOTIFY_WEBHOOK_URL (a Google Apps Script that relays it
+   * to Telegram, which the server cannot reach directly). Failures are only logged:
+   * the message is already stored.
+   */
+  private async notify(entry: StoredMessage) {
+    const url = process.env.NOTIFY_WEBHOOK_URL;
+    if (!url) return;
+
+    const text = [
+      'New message on homazohdi.ir',
+      '',
+      `From: ${entry.name} <${entry.email}>`,
+      entry.subject ? `Subject: ${entry.subject}` : null,
+      '',
+      entry.message,
+    ]
+      .filter((line) => line !== null)
+      .join('\n');
+
+    try {
+      // Apps Script runs the request, then answers with a redirect to its output.
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: process.env.NOTIFY_SECRET ?? '', text }),
+        redirect: 'follow',
+        signal: AbortSignal.timeout(15_000),
+      });
+      const body = await res.text();
+      if (!res.ok || body.trim() !== 'ok') {
+        this.logger.error(`Notification failed (${res.status}): ${body.slice(0, 200)}`);
+      }
+    } catch (err) {
+      this.logger.error(`Notification failed: ${(err as Error).message}`);
     }
   }
 

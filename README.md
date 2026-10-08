@@ -49,9 +49,11 @@ Changes appear on the site within about 60 seconds. The résumé button links to
 
 Contact messages are stored in `backend/storage/messages.json`.
 
+To get a Telegram message for each new contact message, set up the relay in [`deploy/telegram-relay.gs`](deploy/telegram-relay.gs) (a Google Apps Script, since the server cannot reach Telegram directly) and set `NOTIFY_WEBHOOK_URL` and `NOTIFY_SECRET` in `backend/.env`.
+
 ### Configuration
 
-- `backend/.env` — `PORT`, `CORS_ORIGIN`, `MESSAGES_FILE`, `ADMIN_TOKEN` (see `.env.example`)
+- `backend/.env` — `PORT`, `CORS_ORIGIN`, `MESSAGES_FILE`, `ADMIN_TOKEN`, `NOTIFY_WEBHOOK_URL`, `NOTIFY_SECRET` (see `.env.example`)
 - `frontend/.env.local` — `API_URL` (see `.env.example`)
 
 ### Production
@@ -150,9 +152,11 @@ npm run dev           # API on http://localhost:4000/api, site on http://localho
 
 پیام‌های فرم تماس در `backend/storage/messages.json` ذخیره می‌شوند.
 
+برای دریافت پیام تلگرام به ازای هر پیام جدید، اسکریپت [`deploy/telegram-relay.gs`](deploy/telegram-relay.gs) را در Google Apps Script راه‌اندازی کنید (سرور مستقیم به تلگرام دسترسی ندارد) و مقدارهای `NOTIFY_WEBHOOK_URL` و `NOTIFY_SECRET` را در `backend/.env` قرار دهید.
+
 ### پیکربندی
 
-- فایل `backend/.env`: متغیرهای `PORT`، `CORS_ORIGIN`، `MESSAGES_FILE` و `ADMIN_TOKEN` (نمونه در `.env.example`)
+- فایل `backend/.env`: متغیرهای `PORT`، `CORS_ORIGIN`، `MESSAGES_FILE`، `ADMIN_TOKEN`، `NOTIFY_WEBHOOK_URL` و `NOTIFY_SECRET` (نمونه در `.env.example`)
 - فایل `frontend/.env.local`: متغیر `API_URL` (نمونه در `.env.example`)
 
 ### اجرای نسخه‌ی نهایی
