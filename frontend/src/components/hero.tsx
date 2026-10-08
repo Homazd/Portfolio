@@ -19,7 +19,7 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
     <section className="pt-32 pb-24 sm:pt-36">
       <div className="mx-auto max-w-6xl px-6">
         {/* Name plate */}
-        <div className="relative rounded-[28px] border-3 border-line bg-plum px-6 pt-16 pb-28 text-plum-foreground shadow-[10px_10px_0_#000] sm:px-12 sm:pt-20 sm:pb-24">
+        <div className="relative rounded-[28px] border-3 border-line bg-plum px-6 pt-16 text-plum-foreground shadow-[10px_10px_0_#000] sm:px-12 sm:pt-20">
           <Sticker color="mint" rotate={4} index={0} className="absolute -top-5 inset-e-4 z-10 text-sm sm:inset-e-10">
             <span className="size-2.5 rounded-full bg-emerald-600" />
             {profile.availability}
@@ -52,7 +52,8 @@ export function Hero({ profile, lang, dict }: { profile: Profile; lang: Locale; 
             )}
           </div>
 
-          <ul className="absolute inset-s-4 -bottom-8 z-10 flex flex-wrap gap-3 sm:inset-s-10 sm:-bottom-7">
+          {/* In normal flow so the plate grows when the stickers wrap; translated to hang over the bottom edge. */}
+          <ul className="relative z-10 -ms-2 mt-10 flex translate-y-8 flex-wrap gap-3 sm:translate-y-7">
             {profile.highlights.slice(0, 4).map((h, i) => (
               <li key={h.label} className={i > 1 ? "hidden md:block" : undefined}>
                 <Sticker color={STAT_STICKERS[i].color} rotate={STAT_STICKERS[i].rotate} index={i + 1}>
