@@ -37,3 +37,13 @@ function doPost(e) {
 function reply(text) {
   return ContentService.createTextOutput(text);
 }
+
+/** Run from the editor to check the script properties without revealing their values. */
+function checkSetup() {
+  const props = PropertiesService.getScriptProperties().getProperties();
+  ['BOT_TOKEN', 'CHAT_ID', 'SECRET'].forEach(function (key) {
+    const value = props[key];
+    Logger.log(key + ': ' + (value ? 'set, ' + value.length + ' characters' : 'MISSING'));
+  });
+  Logger.log('All property names: ' + JSON.stringify(Object.keys(props)));
+}

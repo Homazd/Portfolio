@@ -83,8 +83,11 @@ export class ContactService {
         redirect: 'follow',
         signal: AbortSignal.timeout(15_000),
       });
-      const body = await res.text();
-      if (!res.ok || body.trim() !== 'ok') {
+      const body = (await res.text()).trim();
+      if (body.startsWith('<')) {
+        // The script already ran; Google sometimes fails to serve its output page from here.
+        this.logger.warn(`Notification sent, but the relay reply was unreadable (${res.status})`);
+      } else if (!res.ok || body !== 'ok') {
         this.logger.error(`Notification failed (${res.status}): ${body.slice(0, 200)}`);
       }
     } catch (err) {
